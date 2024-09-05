@@ -87,3 +87,52 @@ a{
 .link-icon img{
   width:80%;
 }
+
+/* style the weather column */
+.dashboard-menu-item-weather-cards-card{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 10px;
+  min-height: 50px;
+  background-color: white;
+  padding:5px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+
+}
+.weather-icon{
+  flex:1 1 20%;
+}
+.weather-info{
+  flex:1 1 70%;
+}
+.weather-icon img{
+width:100%;
+}
+.weather-day{
+  text-align: center;
+  font-weight: 600;
+  padding:10px;
+}
+.weather-describtion{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.weather-dgree ,.weather-state{
+  background-color: rgba(170, 167, 167, 0.514);
+  padding:5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+}
+
+
+/*  style the fourth column note box */
+.note-box{
+  background-color: white;
+  padding:10px;
+  min-height: 80%;
+  border-radius: 5px;
+
+}
