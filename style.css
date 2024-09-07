@@ -89,6 +89,39 @@ a{
   width:80%;
 }
 
+/*style the dd new link form */
+
+.add-form-links-btn{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.add-form-links-btn button{
+  all:unset;
+  border:2px solid rgb(207, 39, 39);
+  padding:5px 15px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+.add-new-link-form {
+  padding:10px 0 ;
+}
+.hide-add-new-link-form{
+  display: none;
+}
+.add-new-link-form input{
+  padding:5px 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.add-new-link-form button{
+  all:unset;
+  border:2px solid rgb(207, 39, 39);
+  padding:5px 15px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
 /* style the weather column */
 .dashboard-menu-item-weather-cards-card{
   display: flex;
@@ -137,3 +170,5 @@ width:100%;
   border-radius: 5px;
 
 }
+
+
