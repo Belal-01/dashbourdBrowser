@@ -1,5 +1,6 @@
 // start the timer js 
-import { links, loadFromLoacatStorag } from "./links.js"
+import { addLink, deleteLink, links } from "./links.js"
+
 
 
 
@@ -50,15 +51,11 @@ function renderLinksSection(){
   deleteButtons.forEach((deleteButton)=>{
     deleteButton.addEventListener('click',()=>{
      const linkId = deleteButton.dataset.linkId
-     const newArray = []
-     links.forEach((linkelemnt)=>{
-      if(linkelemnt.link!==linkId){
-        newArray.push(linkelemnt)
-      }
-     })
-    localStorage.setItem('Links',JSON.stringify(newArray))
-    loadFromLoacatStorag();
-    renderLinksSection();
+      deleteLink(linkId);
+     
+     renderLinksSection();
+
+
     })
   })
 }
@@ -83,14 +80,11 @@ addLinkForm.addEventListener('submit',(e)=>{
   icon:icon,
   link:link
  }
- links.push(newLink)
- localStorage.setItem('Links',JSON.stringify(links))
+ addLink(newLink);
  renderLinksSection();
  document.getElementById('link-name').value = '';
  document.getElementById('link-icon').value = ''
  document.getElementById('link-link').value = '';
-
-
 addLinkForm.classList.add('hide-add-new-link-form');
 
   
@@ -98,6 +92,53 @@ addLinkForm.classList.add('hide-add-new-link-form');
 
 
 // add js to weather column 
+
+const weathercards = document.getElementById('weather-cards')
+const dayjss = dayjs();
+const dayarr = []
+dayarr[0] = dayjss.add(0,'day').format('dddd')
+dayarr[1] = dayjss.add(1,'day').format('dddd')
+dayarr[2] = dayjss.add(2,'day').format('dddd')
+dayarr[3] = dayjss.add(3,'day').format('dddd')
+
+
+
+async function  fetchWeatherData(url){
+  fetch(url).then(respone=>respone.text()).then(data =>{
+   const Weather = JSON.parse(data);
+   let totalHTml = ''
+ 
+ for(let i = 0 ;i<4;i++){
+  const Html = `  
+ <div class="dashboard-menu-item-weather-cards-card">      
+           <div class="weather-icon">
+             <img src="${Weather.forecast.forecastday[i].day.condition.icon}" alt="link imag">
+           </div>
+           <div class="weather-info">
+             <div class="weather-day">
+               ${dayarr[i]}
+             </div>
+             <div class="weather-describtion">
+               <span class="weather-state">
+                 ${Weather.forecast.forecastday[i].day.maxtemp_c}
+               </span>
+               <span class="weather-dgree">
+                 ${Weather.forecast.forecastday[i].day.condition.text}
+               </span>
+             </div>
+           </div>
+         
+         </div>`
+ 
+ totalHTml+=Html;
+ }
+ weathercards.innerHTML = totalHTml
+   
+  })
+ 
+ }
+
+
 
 function getLocation(){
   navigator.geolocation.getCurrentPosition((position)=>{
@@ -108,42 +149,71 @@ function getLocation(){
   })
 }
 getLocation()
-const weathercards = document.getElementById('weather-cards')
-async function  fetchWeatherData(url){
- fetch(url).then(respone=>respone.text()).then(data =>{
-  const Weather = JSON.parse(data);
-  console.log(Weather.forecast.forecastday[0]);
-  let totalHTml = ''
-for(let i = 0 ;i<4;i++){
-const Html = `  
-<div class="dashboard-menu-item-weather-cards-card">      
-          <div class="weather-icon">
-            <img src="${Weather.forecast.forecastday[0].day.condition.icon}" alt="link imag">
-          </div>
-          <div class="weather-info">
-            <div class="weather-day">
-              Today
-            </div>
-            <div class="weather-describtion">
-              <span class="weather-state">
-                28.3 C
-              </span>
-              <span class="weather-dgree">
-                Sunny
-              </span>
-            </div>
-          </div>
-        
-        </div>`
 
-totalHTml+=Html;
-}
-  
- })
 
+
+
+
+// start the js for the news card 
+
+function renderTheNewsCard (news){
+  const newsElement = document.getElementById('news-container');
+  const random = Math.random()*100;
+  const ranIntger = parseInt(random)
+  console.log(ranIntger)
+  const html = `  
+  <div class="dashboard-menu-item-news-card">
+     <div class="news-img">
+       <img src="${news.articles[ranIntger].urlToImage}" alt="news img">
+     </div>
+     <div class="news-info">
+       <div class="news-author">
+         ${news.articles[ranIntger].author}
+       </div>
+       <div class="news-describtion">
+         ${news.articles[ranIntger].description}
+       </div>
+     </div>
+   </div>`
+
+   newsElement.innerHTML = html;
 }
 
 
+async function fetchNewsData(){
+  fetch('https://newsapi.org/v2/everything?q=tesla&from=2024-08-11&sortBy=publishedAt&apiKey=a0a388cb6362461497fa65a5cce5bf36')
+  .then(respone=>respone.text())
+  .then(data =>{
+    const news = JSON.parse(data)
+setInterval(()=>{
+  renderTheNewsCard(news)
+},10000)
+       
+  })
+}
+
+
+fetchNewsData();
+
+// add js for chang bg button 
+const body = document.getElementById('body')
+document.getElementById('change-bg-button').addEventListener('click',()=>{
+  const random = Math.random()*200;
+  const integerNum = parseInt(random);
+  body.style.cssText = ` 
+   background-image: url('https://picsum.photos/id/${integerNum}/1350/1800');
+  background-repeat: no-repeat;`
+})
+
+// add js for note column 
+
+
+const input = document.querySelector('.js-note-input')
+input.innerHTML = JSON.parse(localStorage.getItem('note'))
+
+input.addEventListener('input',function(){
+   localStorage.setItem('note',JSON.stringify(this.innerHTML))
+})
 
 
 
@@ -152,8 +222,8 @@ totalHTml+=Html;
 
 
 
-const array = [{icon: 'google', name: 'google', link: 'htttp:dsfksfhhfowhf'},
-  {icon: 'facebook', name: 'facebook', link: 'htttp:dsfkhhfowhf'},
-  {icon: 'instagram', name: 'instagram', link: 'htttp:sfksfhhfowf'}]
+// const array = [{icon: 'google', name: 'google', link: 'htttp:dsfksfhhfowhf'},
+//   {icon: 'facebook', name: 'facebook', link: 'htttp:dsfkhhfowhf'},
+//   {icon: 'instagram', name: 'instagram', link: 'htttp:sfksfhhfowf'}]
 
 

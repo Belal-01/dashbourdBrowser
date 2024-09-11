@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="./style.css">
   <title>dash board</title>
 </head>
-<body>
+<body class="body" id="body">
   <div class="dashboard-timer js-dashboard-timer">
     <span class="timer">
     <span class="time js-timer" >12:34:45</span>
@@ -47,17 +47,26 @@
     </div>
     <div class="dashboard-menu-item">
       <div class="dashboard-menu-item--title">
-        Links
+        News
+      </div>
+      <div class="dashboard-menu-item-news-container" id="news-container">
+   
       </div>
     </div>
     <div class="dashboard-menu-item">
       <div class="dashboard-menu-item--title">
         Your Note
       </div>
-      <div class="note-box" contenteditable="true">
+      <div class="note-box js-note-input" contenteditable="true" id="note-input">
         hello
       </div>
     </div>
+  </div>
+
+  <div class="change-page-background">
+    <button id="change-bg-button">
+      Change background
+    </button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
