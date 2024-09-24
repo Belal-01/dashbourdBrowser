@@ -107,7 +107,7 @@ async function  fetchWeatherData(url){
   fetch(url).then(respone=>respone.text()).then(data =>{
    const Weather =  JSON.parse(data);
    let totalHTml = ''
-
+console.log(Weather)
  for(let i = 0 ;i<3;i++){
   const Html = `  
  <div class="dashboard-menu-item-weather-cards-card">      
@@ -144,7 +144,7 @@ function getLocation(){
   navigator.geolocation.getCurrentPosition((position)=>{
   const lat = position.coords.latitude;
   const long = position.coords.longitude;
-  const url = `http://api.weatherapi.com/v1/forecast.json?key=655247343fb24b1992b73350243108&q=${lat},${long}&days=5&aqi=no&alerts=no`
+  const url = `http://api.weatherapi.com/v1/forecast.json?key=e559ff74f5234beeaf3122252242409&q=${lat},${long}&days=5&aqi=no&alerts=no`
   fetchWeatherData(url)
   })
 }
@@ -160,7 +160,7 @@ function renderTheNewsCard (news){
   const newsElement = document.getElementById('news-container');
   const random = Math.random()*100;
   const ranIntger = parseInt(random)
-  console.log(ranIntger)
+
   const html = `  
   <div class="dashboard-menu-item-news-card">
      <div class="news-img">
@@ -184,7 +184,7 @@ async function fetchNewsData(){
   fetch('https://newsapi.org/v2/everything?q=tesla&from=2024-08-24&sortBy=publishedAt&apiKey=a9c16493c4894acfa64ac2a3b018aadd')
   .then(respone=>respone.text())
   .then(data =>{
-    console.log(data)
+
     const news = JSON.parse(data)
 setInterval(()=>{
   renderTheNewsCard(news)
