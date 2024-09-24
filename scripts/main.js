@@ -105,10 +105,10 @@ dayarr[3] = dayjss.add(3,'day').format('dddd')
 
 async function  fetchWeatherData(url){
   fetch(url).then(respone=>respone.text()).then(data =>{
-   const Weather = JSON.parse(data);
+   const Weather =  JSON.parse(data);
    let totalHTml = ''
- 
- for(let i = 0 ;i<4;i++){
+
+ for(let i = 0 ;i<3;i++){
   const Html = `  
  <div class="dashboard-menu-item-weather-cards-card">      
            <div class="weather-icon">
@@ -181,9 +181,10 @@ function renderTheNewsCard (news){
 
 
 async function fetchNewsData(){
-  fetch('https://newsapi.org/v2/everything?q=tesla&from=2024-08-11&sortBy=publishedAt&apiKey=a0a388cb6362461497fa65a5cce5bf36')
+  fetch('https://newsapi.org/v2/everything?q=tesla&from=2024-08-24&sortBy=publishedAt&apiKey=a9c16493c4894acfa64ac2a3b018aadd')
   .then(respone=>respone.text())
   .then(data =>{
+    console.log(data)
     const news = JSON.parse(data)
 setInterval(()=>{
   renderTheNewsCard(news)
